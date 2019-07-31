@@ -1,0 +1,54 @@
+### Kotlin Koans
+
+# Introduction
+
+
+Lambdas
+fun containsEven(collection: Collection<Int>): Boolean = collection.any { it%2 == 0}
+
+Strings ~ Patterns
+val month = "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)"
+fun getPattern(): String = """\d{2} ${month} \d{4}"""
+
+Data Classes
+data class Person(val name: String, val age: Int)
+
+Smart Casts
+fun eval(expr: Expr): Int =
+        when (expr) {
+            is Num -> expr.value
+            is Sum -> eval(expr.left) + eval(expr.right)
+            else -> throw IllegalArgumentException("Unknown expression")
+        }
+
+interface Expr
+class Num(val value: Int) : Expr
+class Sum(val left: Expr, val right: Expr) : Expr
+
+Extension Functions
+fun Int.r(): RationalNumber = RationalNumber(this, 1)
+fun Pair<Int, Int>.r(): RationalNumber = RationalNumber(this.first, this.second)
+
+data class RationalNumber(val numerator: Int, val denominator: Int)
+
+Object Expressions
+fun getList(): List<Int> {
+    val arrayList = arrayListOf(1, 5, 2)
+    Collections.sort(arrayList, object : Comparator<Int> {
+        override fun compare(x: Int, y: Int) = y - x
+    })
+    return arrayList
+}
+
+Single Abstract Method (SAM)
+fun getList(): List<Int> {
+    val arrayList = arrayListOf(1, 5, 2)
+    Collections.sort(arrayList, { x, y -> y-x })
+    return arrayList
+}
+
+Extension Function on collections (java functions)
+fun getList(): List<Int> {
+    return arrayListOf(1, 5, 2).sortedDescending()
+}
+
